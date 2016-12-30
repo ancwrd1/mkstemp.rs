@@ -1,0 +1,13 @@
+[package]
+name = "mkstemp"
+version = "0.0.1"
+authors = ["Dmitry Pankratov <dmitry@pankratov.net>"]
+description = "Safe wrapper over mkstemp function from libc"
+license = "MIT"
+repository = "https://github.com/dremon/mkstemp.rs"
+documentation = "https://dremon.github.io/mkstemp.rs/doc/mkstemp"
+readme = "README.md"
+keywords = ["mkstemp", "libc", "tempfile", "temporary"]
+
+[dependencies]
+libc = "0.2"
