@@ -1,0 +1,3 @@
+var searchIndex = {};
+searchIndex["mkstemp"] = {"doc":"Safe wrapper over mkstemp function from libc","items":[[3,"TempFile","mkstemp","Temporary file",null,null],[11,"new","","Create temporary file",0,{"inputs":[{"name":"str"},{"name":"bool"}],"output":{"name":"result"}}],[11,"path","","Return a reference to the actual file path",0,null],[11,"drop","","",0,null],[11,"read","","",0,null],[11,"read_to_end","","",0,null],[11,"read_to_string","","",0,null],[11,"read_exact","","",0,null],[11,"write","","",0,null],[11,"flush","","",0,null],[11,"write_all","","",0,null],[11,"write_fmt","","",0,null]],"paths":[[3,"TempFile"]]};
+initSearch(searchIndex);
