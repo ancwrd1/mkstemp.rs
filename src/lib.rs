@@ -7,15 +7,16 @@
 //! extern crate mkstemp;
 //! pub fn main() {
 //!     // delete automatically when it goes out of scope
-//!     let temp_file = mkstemp::TempFile::new("/tmp/testXXXXXX", true).unwrap();
-//!     temp_file.file().write("test content".as_bytes()).unwrap();
+//!     let mut temp_file = mkstemp::TempFile::new("/tmp/testXXXXXX", true).unwrap();
+//!     temp_file.write("test content".as_bytes()).unwrap();
 //! }
 //! ```
 
-use std::io;
+use std::io::{self, Read, Write};
 use std::fs::{File, remove_file};
 use std::os::unix::io::FromRawFd;
 use std::ffi::CString;
+use std::fmt::Arguments;
 
 extern crate libc;
 
@@ -49,11 +50,6 @@ impl TempFile {
         })
     }
 
-    /// Return a reference to a file
-    pub fn file(&self) -> &File {
-        &self.file
-    }
-
     /// Return a reference to the actual file path
     pub fn path(&self) -> &str {
         &self.path
@@ -66,5 +62,41 @@ impl Drop for TempFile {
         if self.auto_delete {
             let _ = remove_file(&self.path);
         }
+    }
+}
+
+impl Read for TempFile {
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        self.file.read(buf)
+    }
+
+    fn read_to_end(&mut self, buf: &mut Vec<u8>) -> io::Result<usize> {
+        self.file.read_to_end(buf)
+    }
+
+    fn read_to_string(&mut self, buf: &mut String) -> io::Result<usize> {
+        self.file.read_to_string(buf)
+    }
+
+    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
+        self.file.read_exact(buf)
+    }
+}
+
+impl Write for TempFile {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        self.file.write(buf)
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.file.flush()
+    }
+
+    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
+        self.file.write_all(buf)
+    }
+
+    fn write_fmt(&mut self, fmt: Arguments) -> io::Result<()> {
+        self.file.write_fmt(fmt)
     }
 }

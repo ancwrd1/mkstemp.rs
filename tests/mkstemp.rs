@@ -13,8 +13,8 @@ fn mkstemp() {
         let templ = ::std::env::temp_dir().to_str().unwrap().to_string() + "/testXXXXXX";
         let rc = mkstemp::TempFile::new(&templ, true);
         assert!(rc.is_ok());
-        let temp_file = rc.unwrap();
-        assert!(do_write(&mut temp_file.file()).is_ok());
+        let mut temp_file = rc.unwrap();
+        assert!(do_write(&mut temp_file).is_ok());
         path = temp_file.path().to_string();
     }
     assert!(::std::fs::metadata(&path).is_err());
@@ -23,8 +23,8 @@ fn mkstemp() {
         let templ = ::std::env::temp_dir().to_str().unwrap().to_string() + "/testXXXXXX";
         let rc = mkstemp::TempFile::new(&templ, false);
         assert!(rc.is_ok());
-        let temp_file = rc.unwrap();
-        assert!(do_write(&mut temp_file.file()).is_ok());
+        let mut temp_file = rc.unwrap();
+        assert!(do_write(&mut temp_file).is_ok());
         path = temp_file.path().to_string();
     }
     assert!(::std::fs::metadata(&path).is_ok());

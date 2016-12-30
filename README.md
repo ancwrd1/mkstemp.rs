@@ -7,11 +7,12 @@ Safe wrapper over mkstemp function from libc
 Usage example:
 
 ```rust
+use std::io::Write;
 extern crate mkstemp;
 pub fn main() {
     // delete automatically when it goes out of scope
-    let temp_file = mkstemp::TempFile::new("/tmp/testXXXXXX", true).unwrap();
-    temp_file.file().write("test content".as_bytes()).unwrap();
+    let mut temp_file = mkstemp::TempFile::new("/tmp/testXXXXXX", true).unwrap();
+     temp_file.write("test content".as_bytes()).unwrap();
 }
 ```
 
