@@ -11,3 +11,6 @@ keywords = ["mkstemp", "libc", "tempfile", "temporary"]
 
 [dependencies]
 libc = "0.2"
+
+[lib]
+name = "mkstemp"
