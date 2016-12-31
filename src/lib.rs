@@ -45,7 +45,7 @@ impl TempFile {
 
         Ok(TempFile {
             file: file,
-            path: path.into_string().map_err(|_| io::Error::new(io::ErrorKind::Other, "UTF8 error"))?,
+            path: path.into_string().map_err(|e| io::Error::new(io::ErrorKind::Other, e))?,
             auto_delete: auto_delete
         })
     }
