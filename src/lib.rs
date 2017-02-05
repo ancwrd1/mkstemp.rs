@@ -58,7 +58,6 @@ impl TempFile {
 
 impl Drop for TempFile {
     fn drop(&mut self) {
-        drop(&self.file);
         if self.auto_delete {
             let _ = remove_file(&self.path);
         }

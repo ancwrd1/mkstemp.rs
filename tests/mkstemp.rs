@@ -3,7 +3,7 @@ extern crate mkstemp;
 use std::io::{Result, Write};
 
 fn do_write(writer: &mut Write) -> Result<usize> {
-    writer.write("test".as_bytes())
+    writer.write(b"test")
 }
 
 #[test]
