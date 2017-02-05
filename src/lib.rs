@@ -22,7 +22,8 @@ extern crate libc;
 
 /// Temporary file
 pub struct TempFile {
-    file: File,
+    // we use Option here as a trick to close the file in the drop trait
+    file: Option<File>,
     path: String,
     auto_delete: bool
 }
@@ -44,7 +45,7 @@ impl TempFile {
         let file = unsafe { File::from_raw_fd(fd) };
 
         Ok(TempFile {
-            file: file,
+            file: Some(file),
             path: path.into_string().map_err(|e| io::Error::new(io::ErrorKind::Other, e))?,
             auto_delete: auto_delete
         })
@@ -54,10 +55,16 @@ impl TempFile {
     pub fn path(&self) -> &str {
         &self.path
     }
+
+    pub fn inner(&mut self) -> &mut File {
+        self.file.as_mut().unwrap()
+    }
 }
 
 impl Drop for TempFile {
     fn drop(&mut self) {
+        // close the file
+        self.file = None;
         if self.auto_delete {
             let _ = remove_file(&self.path);
         }
@@ -66,36 +73,36 @@ impl Drop for TempFile {
 
 impl Read for TempFile {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        self.file.read(buf)
+        self.inner().read(buf)
     }
 
     fn read_to_end(&mut self, buf: &mut Vec<u8>) -> io::Result<usize> {
-        self.file.read_to_end(buf)
+        self.inner().read_to_end(buf)
     }
 
     fn read_to_string(&mut self, buf: &mut String) -> io::Result<usize> {
-        self.file.read_to_string(buf)
+        self.inner().read_to_string(buf)
     }
 
     fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
-        self.file.read_exact(buf)
+        self.inner().read_exact(buf)
     }
 }
 
 impl Write for TempFile {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        self.file.write(buf)
+        self.inner().write(buf)
     }
 
     fn flush(&mut self) -> io::Result<()> {
-        self.file.flush()
+        self.inner().flush()
     }
 
     fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
-        self.file.write_all(buf)
+        self.inner().write_all(buf)
     }
 
     fn write_fmt(&mut self, fmt: Arguments) -> io::Result<()> {
-        self.file.write_fmt(fmt)
+        self.inner().write_fmt(fmt)
     }
 }
