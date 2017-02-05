@@ -56,7 +56,7 @@ impl TempFile {
         &self.path
     }
 
-    /// Return a mutable reference for inner file
+    /// Return a mutable reference to inner file
     pub fn inner(&mut self) -> &mut File {
         self.file.as_mut().unwrap()
     }
