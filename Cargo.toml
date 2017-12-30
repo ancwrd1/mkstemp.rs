@@ -1,6 +1,6 @@
 [package]
 name = "mkstemp-rs"
-version = "0.0.2"
+version = "1.0.0"
 authors = ["Dmitry Pankratov <dmitry@pankratov.net>"]
 description = "Safe wrapper over mkstemp function from libc"
 license = "MIT"
