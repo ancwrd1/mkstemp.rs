@@ -12,11 +12,11 @@
 //! }
 //! ```
 
-use std::io::{self, Read, Write};
-use std::fs::{File, remove_file};
-use std::os::unix::io::FromRawFd;
 use std::ffi::CString;
 use std::fmt::Arguments;
+use std::fs::{remove_file, File};
+use std::io::{self, Read, Write};
+use std::os::unix::io::FromRawFd;
 
 extern crate libc;
 
@@ -25,7 +25,7 @@ pub struct TempFile {
     // we use Option here as a trick to close the file in the drop trait
     file: Option<File>,
     path: String,
-    auto_delete: bool
+    auto_delete: bool,
 }
 
 impl TempFile {
@@ -39,15 +39,17 @@ impl TempFile {
         let path = unsafe { CString::from_raw(ptr) };
 
         if fd < 0 {
-            return Err(io::Error::last_os_error())
+            return Err(io::Error::last_os_error());
         }
 
         let file = unsafe { File::from_raw_fd(fd) };
 
         Ok(TempFile {
             file: Some(file),
-            path: path.into_string().map_err(|e| io::Error::new(io::ErrorKind::Other, e))?,
-            auto_delete: auto_delete
+            path: path
+                .into_string()
+                .map_err(|e| io::Error::new(io::ErrorKind::Other, e))?,
+            auto_delete: auto_delete,
         })
     }
 
