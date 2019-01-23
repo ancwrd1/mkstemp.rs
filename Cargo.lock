@@ -1,14 +1,14 @@
 [[package]]
 name = "libc"
-version = "0.2.36"
+version = "0.2.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "mkstemp-rs"
 version = "1.0.0"
 dependencies = [
- "libc 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [metadata]
-"checksum libc 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)" = "1e5d97d6708edaa407429faa671b942dc0f2727222fb6b6539bf1db936e4b121"
+"checksum libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)" = "48450664a984b25d5b479554c29cc04e3150c97aa4c01da5604a2d4ed9151476"

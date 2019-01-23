@@ -1,6 +1,6 @@
 # mkstemp.rs
 
-Safe wrapper over mkstemp function from libc
+Safe wrapper over mkstemp function from libc (Unix systems only).
 
 [Documentation](https://dremon.github.io/mkstemp.rs/doc/mkstemp)
 
