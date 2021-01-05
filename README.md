@@ -2,6 +2,8 @@
 
 Safe wrapper over mkstemp function from libc (Unix systems only).
 
+You should probably use a (much) better crate like [tempfile](https://crates.io/crates/tempfile).
+
 [Documentation](https://dremon.github.io/mkstemp.rs/doc/mkstemp)
 
 Usage example:
